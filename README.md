@@ -24,3 +24,4 @@ Use the following terminal commands to:
 
 ## Sources
 1. Flask-RESTful Quickstart Guide: https://flask-restful.readthedocs.io/en/latest/
+2. Claude AI and ChatGPT
