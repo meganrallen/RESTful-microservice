@@ -13,9 +13,29 @@ Use the following terminal commands to:
    ```bash
    git clone <your-private-repo-url>
 3. Navigate to the project directory: cd <project-directory>
-4. Build the Docker image: docker build -t restful-microservice .
-5. Run the Docker container: docker run -p 5000:5000 restful-microservice
-6. [Optional] Access Swagger UI documentation: http://localhost:5000/swagger
+4. Build the Docker image:
+   ```bash
+   docker build -t mallen5/rest:v0.0.1 .
+5. Apply ConfigMap:
+   ```bash
+   kubectl apply -f ConfigMap.yaml
+6. Apply Deployment:
+   ```bash
+   kubectl apply -f deployment.yaml
+7. Apply Service:
+   ```bash
+   kubectl apply -f service.yaml
+8. Verify Deployments, Pods, Services, and ConfigMaps are running:
+   ```bash
+   kubectl get deployments
+   kubectl get pods
+   kubectl get services
+   kubectl get configmaps
+10. Access the microservice externally using NodePort and capture the output:
+    ```bash
+    curl http://34.42.155.186:31234/config > curl_config.txt
+    curl http://34.42.155.186:31234/fib?length=10 > curl_fib.txt
+11. [Optional] Access Swagger UI documentation: http://localhost:5000/swagger
 
 ## Learning Journey
 1. Installed necessary dependencies for the Visual Studio Code development environment.
