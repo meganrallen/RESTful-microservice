@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: microservice
+  template:
+    metadata:
+      labels:
+        app: microservice
+    spec:
+      containers:
+      - name: microservice-container
+        image: your-image:tag
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+        env:
+        - name: DATA_MICROSERVICE
+          valueFrom:
+            configMapKeyRef:
+              name: microservice-config
+              key: DATA_MICROSERVICE
+      volumes:
+      - name: config-volume
+        configMap:
+          name: microservice-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-service
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    nodePort: 31234
+  selector:
+    app: microservice

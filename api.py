@@ -1,6 +1,12 @@
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
-from flask_swagger_ui import get_swaggerui_blueprint #
+from flask_swagger_ui import get_swaggerui_blueprint 
+
+import os
+
+# Access the environment variable
+microservice_data = os.environ.get('DATA_MICROSERVICE', 'DefaultMicroservice')
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -9,6 +15,28 @@ api = Api(app)
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
+
+# Add a RESTful route "/config"
+@app.route("/config")
+def get_config():
+    config_data = {}  # Initialize an empty dictionary
+    # Populate config_data with environment variables
+    for key, value in os.environ.items():
+        config_data[key] = value
+    # Log config_data
+    app.logger.info("Config data: %s", config_data)
+    return jsonify(config_data)
+
+# Add a RESTful route "/fib"
+from flask import request
+
+@app.route("/fib")
+def fibonacci():
+    length = request.args.get('length', type=int)
+    fib_sequence = [0, 1]
+    for i in range(2, length):
+        fib_sequence.append(fib_sequence[i-1] + fib_sequence[i-2])
+    return jsonify(fib_sequence)
 
 # Enable Swagger UI
 SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
