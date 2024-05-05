@@ -27,17 +27,19 @@ jobs:
         run: |
           echo "Running the Docker container"
           docker run -d --name microservice mallen5/rest:v0.0.1
+          sleep 5  # Adding a sleep command to wait for the container to start
         
       - name: Test the RESTful service
         run: |
           echo "Testing the RESTful service"
-          sleep 5
           curl http://localhost:5000/fib?length=10
           # Add more curl commands to verify other endpoints if needed
           
-      - name: Post Run actions/checkout@v2
-        uses: actions/checkout@v2
-        run: echo "Post-run actions/checkout@v2"
-        
+      - name: Stop and remove the microservice container
+        run: |
+          echo "Stopping and removing the microservice container"
+          docker stop microservice
+          docker rm microservice
+          
       - name: Complete job
         run: echo "Job complete"
