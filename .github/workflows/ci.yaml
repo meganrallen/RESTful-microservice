@@ -1,0 +1,31 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Build Docker image
+        run: docker build -t mallen5/rest:v0.0.1 .
+        
+      - name: Run microservice in a container
+        run: docker run -d --name microservice mallen5/rest:v0.0.1
+        
+      - name: Wait for microservice to start
+        run: sleep 15
+        
+      - name: Verify /fib request with curl
+        run: |
+          curl http://localhost:5000/fib?length=10
+          # Add more curl commands to verify other endpoints if needed
+          
+      - name: Stop and remove microservice container
+        run: docker stop microservice && docker rm microservice
