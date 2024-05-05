@@ -12,22 +12,32 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout code
+      - name: Set up job
+        run: echo "Setting up job"
+        
+      - name: Run actions/checkout@v2
         uses: actions/checkout@v2
         
-      - name: Build Docker image
-        run: docker build -t mallen5/rest:v0.0.1 .
-        
-      - name: Run microservice in a container
-        run: docker run -d --name microservice mallen5/rest:v0.0.1
-        
-      - name: Wait for microservice to start
-        run: sleep 5
-        
-      - name: Verify /fib request with curl
+      - name: Build the Docker image
         run: |
+          echo "Building the Docker image"
+          docker build -t mallen5/rest:v0.0.1 .
+        
+      - name: Run the Docker container
+        run: |
+          echo "Running the Docker container"
+          docker run -d --name microservice mallen5/rest:v0.0.1
+        
+      - name: Test the RESTful service
+        run: |
+          echo "Testing the RESTful service"
+          sleep 5
           curl http://localhost:5000/fib?length=10
           # Add more curl commands to verify other endpoints if needed
           
-      - name: Stop and remove microservice container
-        run: docker stop microservice && docker rm microservice
+      - name: Post Run actions/checkout@v2
+        uses: actions/checkout@v2
+        run: echo "Post-run actions/checkout@v2"
+        
+      - name: Complete job
+        run: echo "Job complete"
