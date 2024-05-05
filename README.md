@@ -11,7 +11,7 @@
 Use the following terminal commands to:
 1. Clone the repository to your local machine:
    ```bash
-   git clone <your-private-repo-url>
+   git clone https://github.com/meganrallen/RESTful-microservice
 3. Navigate to the project directory: cd <project-directory>
 4. Build the Docker image:
    ```bash
