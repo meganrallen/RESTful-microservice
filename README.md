@@ -9,11 +9,13 @@
 
 ## Build and Run Instructions
 Use the following terminal commands to:
-1. Clone the repository to your local machine: git clone <your-private-repo-url>
-2. Navigate to the project directory: cd <project-directory>
-3. Build the Docker image: docker build -t restful-microservice .
-4. Run the Docker container: docker run -p 5000:5000 restful-microservice
-5. [Optional] Access Swagger UI documentation: http://localhost:5000/swagger
+1. Clone the repository to your local machine:
+   ```bash
+   git clone <your-private-repo-url>
+3. Navigate to the project directory: cd <project-directory>
+4. Build the Docker image: docker build -t restful-microservice .
+5. Run the Docker container: docker run -p 5000:5000 restful-microservice
+6. [Optional] Access Swagger UI documentation: http://localhost:5000/swagger
 
 ## Learning Journey
 1. Installed necessary dependencies for the Visual Studio Code development environment.
